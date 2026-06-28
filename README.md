@@ -1,82 +1,65 @@
 # Banking CRM Analytics – SQL & Python
 
-End-to-end analytics project simulating a banking CRM use case.
+End-to-end data science project simulating a banking CRM use case focused on predicting customer response to credit offers.
 
 ## 🔷 Project Overview
-This project simulates a banking CRM analytics use case focused on improving the effectiveness of credit offer targeting.
+This project demonstrates a basic workflow for building a predictive model using relational data stored in PostgreSQL.
 
-In many banking systems, credit offers are distributed broadly across customer bases, which leads to low conversion rates and inefficient marketing spend. The goal of this project is to analyze customer behavior and build a predictive model that helps identify customers most likely to respond to credit offers.
+The goal is to predict whether a customer will respond to a credit offer based on available customer attributes.
 
-The solution combines SQL-based data processing with Python-based analytics and machine learning.
+The project combines:
+
+- SQL for data extraction
+- Python (pandas) for data processing
+- scikit-learn for machine learning
 
 ## 🎯 Business Problem
 
-Banks often rely on non-targeted or loosely segmented marketing campaigns when distributing credit offers. This results in:
-- low response rates
-- high acquisition costs
-- inefficient use of customer data
+Banks often send credit offers to a broad customer base, which results in low response rates and inefficient marketing spend.
 
-This project addresses the need for data-driven targeting by identifying behavioral and financial patterns associated with customer responsiveness.
+This project aims to build a simple predictive model that helps identify customers who are more likely to respond to a credit offer.
 
-## 🗄️ Data & Database Design
-The dataset simulates a banking CRM system and consists of three main tables:
+## 🗄️ Data
+The project uses a PostgreSQL database with three tables:
 
-- customers – demographic and financial information
-- offers – credit offer details and response labels
-- transactions – customer transaction history
+- customers – customer demographic and financial data
+- offers – credit offer records with response label (responded)
+- transactions – transaction history (defined in schema but not used in the model)
 
-The data is structured in a relational PostgreSQL database.
-Schema and sample data are available in the /sql directory.
+## ⚙️ Data Extraction
 
-## ⚙️ SQL Feature Engineering
+Data for modeling is extracted using a SQL JOIN between customers and offers.
 
-Customer-level features were created using SQL, including:
+Only customer attributes and the response label are used in the machine learning model.
 
-- aggregated transaction behavior (spending patterns, frequency)
-- credit limit and balance-based financial indicators
-- tenure-based features
-- customer-level joins between transactional and CRM data
+## 🤖 Model
+A logistic regression model is used to predict customer response.
 
-SQL logic uses joins and aggregations to transform raw transactional data into analytical features for modeling.
-
-## 📊 EDA
-
-Exploratory Data Analysis was used to understand customer behavior and identify patterns related to offer response.
-
-Key areas analyzed:
-
-- distribution of income and credit utilization
-- response rate across customer segments
-- relationship between tenure and engagement
-- correlation between financial behavior and offer acceptance
-
-## 🤖 Predictive Model
-A logistic regression model was trained to predict whether a customer will respond to a credit offer.
+Pipeline:
+- StandardScaler (feature scaling)
+- LogisticRegression (class_weight="balanced")
 
 Features used:
-- income
-- tenure
-- credit limit and current balance
-- product ownership
-- aggregated transaction behavior
+- age
+- annual_income
+- tenure_months
+- credit_limit
+- current_balance
+- num_products
 
-All features are derived from customer financial attributes and transactional aggregates available in the dataset.
+Training:
+- Train/test split (80/20)
+- Random state set for reproducibility
 
-The model was trained using a standard train/test split and evaluated on a holdout dataset.
+## 📊 Evaluation
 
-## 🔍 Key Insights
+Model performance is evaluated using:
 
-- Customers with higher credit utilization show a higher likelihood of responding to credit offers
-- Product ownership is strongly associated with increased engagement
-- Longer-tenure customers tend to be less responsive to new credit offers
-- Transaction activity patterns provide additional predictive signal beyond static attributes
+- precision
+- recall
+- f1-score
 
-## 💼 Business Recommendations
-
-- Prioritize credit offers for high-utilization customers to increase conversion rates
-- Use product ownership as a segmentation feature in CRM campaigns
-- Reduce marketing exposure for low-propensity long-tenure customers
-- Incorporate behavioral transaction features into targeting models to improve accuracy
+Results are displayed using classification_report.
 
 ## 🚀 How to Run
 1. Create PostgreSQL database
