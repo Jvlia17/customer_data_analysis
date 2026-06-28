@@ -6,18 +6,18 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import classification_report
 
-# --- konfiguracja połączenia ---
+# --- Database connection settings ---
 DB_USER = "postgres"
 DB_PASSWORD = "your_password_here" #!!!
 DB_HOST = "localhost"
 DB_PORT = "5432"
-DB_NAME = "mydb"
+DB_NAME = "customer_data_analysis"
 
 engine = create_engine(
     f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 )
 
-# --- pobranie danych z PostgreSQL ---
+# --- Load data from PostgreSQL ---
 query = """
 SELECT
     c.customer_id,
@@ -34,29 +34,32 @@ JOIN offers o ON c.customer_id = o.customer_id;
 
 df = pd.read_sql(query, engine)
 
-print("Podgląd danych:")
+print("Dataset preview:")
 print(df.head())
 
-# --- przygotowanie danych ---
+# --- Prepare features and target variable ---
 X = df.drop(columns=["responded", "customer_id"])
 y = df["responded"]
 
+# Keep only numerical features
 X = X.select_dtypes(include=["number"])
 
+# Split the dataset into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
-# --- pipeline ML ---
+# --- Build the machine learning pipeline ---
 pipeline = Pipeline([
     ("scaler", StandardScaler()),
     ("model", LogisticRegression(max_iter=1000, class_weight="balanced"))
 ])
 
+# Train the model
 pipeline.fit(X_train, y_train)
 
-# --- ewaluacja ---
+# --- Evaluate model performance ---
 y_pred = pipeline.predict(X_test)
 
-print("\nWyniki modelu:")
+print("\nClassification Report:")
 print(classification_report(y_test, y_pred))
