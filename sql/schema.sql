@@ -1,5 +1,5 @@
 -- =========================
--- 1. TABELA: CUSTOMERS
+-- 1. CUSTOMERS TABLE
 -- =========================
 CREATE TABLE customers (
     customer_id SERIAL PRIMARY KEY,
@@ -13,7 +13,7 @@ CREATE TABLE customers (
 );
 
 -- =========================
--- 2. TABELA: OFFERS
+-- 2. OFFERS TABLE
 -- =========================
 CREATE TABLE offers (
     offer_id SERIAL PRIMARY KEY,
@@ -27,7 +27,7 @@ CREATE TABLE offers (
 );
 
 -- =========================
--- 3. TABELA: TRANSACTIONS (opcjonalna, bardzo bankowa)
+-- 3. TRANSACTIONS TABLE
 -- =========================
 CREATE TABLE transactions (
     transaction_id SERIAL PRIMARY KEY,
@@ -41,7 +41,7 @@ CREATE TABLE transactions (
 );
 
 -- =========================
--- 4. INDEKSY (ważne w praktyce)
+-- 4. INDEXES
 -- =========================
 CREATE INDEX idx_customers_income ON customers(annual_income);
 CREATE INDEX idx_offers_customer ON offers(customer_id);
