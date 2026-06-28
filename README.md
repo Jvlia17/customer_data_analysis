@@ -33,9 +33,8 @@ Schema and sample data are available in the /sql directory.
 Customer-level features were created using SQL, including:
 
 - aggregated transaction behavior (spending patterns, frequency)
-- credit utilization metrics
+- credit limit and balance-based financial indicators
 - tenure-based features
-- product ownership indicators
 - customer-level joins between transactional and CRM data
 
 SQL logic uses joins and aggregations to transform raw transactional data into analytical features for modeling.
@@ -57,9 +56,11 @@ A logistic regression model was trained to predict whether a customer will respo
 Features used:
 - income
 - tenure
-- credit utilization
+- credit limit and current balance
 - product ownership
 - aggregated transaction behavior
+
+All features are derived from customer financial attributes and transactional aggregates available in the dataset.
 
 The model was trained using a standard train/test split and evaluated on a holdout dataset.
 
