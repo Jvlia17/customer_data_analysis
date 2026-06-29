@@ -2,6 +2,8 @@
 
 End-to-end data science project simulating a banking CRM use case focused on predicting customer response to credit offers.
 
+---
+
 ## 🔷 Project Overview
 This project demonstrates a basic workflow for building a predictive model using relational data stored in PostgreSQL.
 
@@ -13,11 +15,15 @@ The project combines:
 - Python (pandas) for data processing
 - scikit-learn for machine learning
 
+---
+
 ## 🎯 Business Problem
 
 Banks often send credit offers to a broad customer base, which results in low response rates and inefficient marketing spend.
 
 This project aims to build a simple predictive model that helps identify customers who are more likely to respond to a credit offer.
+
+---
 
 ## 🗄️ Data
 The project uses a PostgreSQL database with three tables:
@@ -26,11 +32,15 @@ The project uses a PostgreSQL database with three tables:
 - offers – credit offer records with response label (responded)
 - transactions – transaction history (defined in schema but not used in the model)
 
+---
+
 ## ⚙️ Data Extraction
 
 Data for modeling is extracted using a SQL JOIN between customers and offers.
 
 Only customer attributes and the response label are used in the machine learning model.
+
+---
 
 ## 🤖 Model
 A logistic regression model is used to predict customer response.
@@ -51,6 +61,8 @@ Training:
 - Train/test split (80/20)
 - Random state set for reproducibility
 
+---
+
 ## 📊 Evaluation
 
 Model performance is evaluated using:
@@ -60,6 +72,8 @@ Model performance is evaluated using:
 - f1-score
 
 Results are displayed using classification_report.
+
+---
 
 ## 🚀 How to Run
 1. Create PostgreSQL database
