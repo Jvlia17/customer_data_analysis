@@ -5,73 +5,89 @@ End-to-end data science project simulating a banking CRM use case focused on pre
 ---
 
 ## 🔷 Project Overview
-This project demonstrates a basic workflow for building a predictive model using relational data stored in PostgreSQL.
+This project demonstrates an end-to-end analytics workflow built on relational data stored in PostgreSQL.
 
-The goal is to predict whether a customer will respond to a credit offer based on available customer attributes.
+The goal is to predict whether a customer will respond to a credit offer based on behavioral and financial attributes.
 
 The project combines:
 
-- SQL for data extraction
-- Python (pandas) for data processing
-- scikit-learn for machine learning
+- SQL for data storage, joins, and feature extraction
+- Python (pandas) for data processing and feature engineering
+- scikit-learn for machine learning modeling
+- visualization for model evaluation and interpretation
 
 ---
 
 ## 🎯 Business Problem
 
-Banks often send credit offers to a broad customer base, which results in low response rates and inefficient marketing spend.
+Banks and financial institutions frequently send credit offers to large customer bases, resulting in low response rates and inefficient marketing spend.
 
-This project aims to build a simple predictive model that helps identify customers who are more likely to respond to a credit offer.
+The objective of this project is to build a predictive model that identifies customers who are more likely to respond to a credit offer, improving targeting efficiency.
 
 ---
 
 ## 🗄️ Data
-The project uses a PostgreSQL database with three tables:
+The project uses a PostgreSQL relational database with three tables:
 
-- customers – customer demographic and financial data
-- offers – credit offer records with response label (responded)
-- transactions – transaction history (defined in schema but not used in the model)
+- **customers** – demographic and financial attributes
+- **offers** – credit offer records with binary response label (`responded`)
+- **transactions** – transaction history (stored but not used in final model)
 
 ---
 
 ## ⚙️ Data Extraction
 
-Data for modeling is extracted using a SQL JOIN between customers and offers.
+Data is extracted from PostgreSQL using SQL JOINs between `customers` and `offers`.
 
-Only customer attributes and the response label are used in the machine learning model.
+Additional feature engineering is performed in Python to enrich the dataset with behavioral financial metrics.
+
+### Engineered features include:
+
+- `utilization_ratio` = current_balance / credit_limit  
+- `income_to_credit` = annual_income / credit_limit  
+- `risk_score` = composite financial risk indicator
 
 ---
 
 ## 🤖 Model
-A logistic regression model is used to predict customer response.
+A **Random Forest Classifier** is used to model customer response behavior.
 
-Pipeline:
-- StandardScaler (feature scaling)
-- LogisticRegression (class_weight="balanced")
+### Pipeline:
 
-Features used:
-- age
-- annual_income
-- tenure_months
-- credit_limit
-- current_balance
-- num_products
-
-Training:
-- Train/test split (80/20)
-- Random state set for reproducibility
+- Feature engineering (Python)
+- Train/test split (80/20, stratified)
+- Random Forest model (n_estimators=300, max_depth=6, class_weight="balanced")
 
 ---
 
 ## 📊 Evaluation
-
 Model performance is evaluated using:
 
-- precision
-- recall
-- f1-score
+- Precision / Recall / F1-score
+- Confusion Matrix
+- ROC Curve
+- ROC-AUC score
 
-Results are displayed using classification_report.
+Final Results
+
+- **Accuracy:** ~0.61  
+- **ROC-AUC:** ~0.69  
+- Balanced performance across both classes (0 and 1)
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/dd462b5b-bf6a-4803-b0bc-6bc37dd8ed82" width="450">
+  <img src="https://github.com/user-attachments/assets/013a98da-7c13-4760-a0cf-e61a7b5c3db2" width="450">
+</p>
+
+<img width="1380" height="498" alt="obraz3" src="https://github.com/user-attachments/assets/e452cde4-8168-4078-b479-8fe78e496dd3" />
+
+---
+
+## 📈 Key Insights
+
+- Customer annual income and risk score are strongest predictors of response
+- Financial utilization patterns significantly influence classification decisions
+- The model captures moderate predictive signal, indicating realistic noise in synthetic data
 
 ---
 
@@ -82,3 +98,6 @@ Results are displayed using classification_report.
 4. Install dependencies:
    ```bash
    pip install -r requirements.txt
+5. Run pipeline 
+   ```bash
+   python main.py
