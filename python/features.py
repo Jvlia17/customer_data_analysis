@@ -1,4 +1,4 @@
-from db import load_data
+from python.db import load_data
 
 def get_features():
     df = load_data()
